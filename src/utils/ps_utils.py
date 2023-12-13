@@ -14,14 +14,6 @@ def load_static_data():
     return PSStaticData(get_type_chart(), get_abilities(), get_movedex(), get_items(), get_pokedex(), get_learn_sets())
 
 
-def read_config(filename):
-    print(f"Reading config file at {filename}")
-
-    with open(filename, 'r') as file:
-        configs = json.load(file)
-    return configs
-
-
 def get_ps_replays(pages=5):
     replays = []
 

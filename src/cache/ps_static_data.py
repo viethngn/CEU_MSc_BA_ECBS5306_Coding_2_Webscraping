@@ -8,5 +8,11 @@ class PSStaticData:
         self.pokedex = pokedex
         self.learn_sets = learn_sets
 
-    def get_pkm_by_code(self, pkm_code):
+    def get_pkm_by_code(self, pkm_code: str):
         return self.pokedex[pkm_code]
+
+    def get_pkm_type_by_code(self, pkm_code: str):
+        return self.pokedex[pkm_code]['types']
+
+    def get_pkm_name_by_code(self, pkm_code: str):
+        return self.pokedex[pkm_code]['name']
