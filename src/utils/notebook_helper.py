@@ -3,7 +3,7 @@ import pandas as pd
 from src.cache.ps_static_data import PSStaticData
 
 
-def get_pkm_usage(df: pd.DataFrame, ps_static: PSStaticData):
+def get_battle_turns_df(df: pd.DataFrame):
     battle_turns_df = df.groupby(
         ['game_id', 'p1_pkm1_code', 'p1_pkm2_code', 'p1_pkm3_code', 'p1_pkm4_code', 'p1_pkm5_code', 'p1_pkm6_code',
          'p2_pkm1_code', 'p2_pkm2_code', 'p2_pkm3_code', 'p2_pkm4_code', 'p2_pkm5_code', 'p2_pkm6_code'])[
@@ -11,6 +11,11 @@ def get_pkm_usage(df: pd.DataFrame, ps_static: PSStaticData):
          'p2_pkm1_code', 'p2_pkm2_code', 'p2_pkm3_code', 'p2_pkm4_code', 'p2_pkm5_code',
          'p2_pkm6_code']].value_counts().reset_index()
     battle_turns_df.rename(columns={'count': 'turns'}, inplace=True)
+    return battle_turns_df
+
+
+def get_pkm_usage(df: pd.DataFrame, ps_static: PSStaticData):
+    battle_turns_df = get_battle_turns_df(df)
 
     used_pokemons = []
     for index, row in battle_turns_df.iterrows():
