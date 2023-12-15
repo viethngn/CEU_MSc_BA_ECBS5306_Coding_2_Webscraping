@@ -1,4 +1,4 @@
-# CEU_MSc_BA_ECBS5306_Coding_2_Webscraping
+# Pokemon Showdown - Coding2 Final Project
 
 ## Overview
 **WARNING**: The Jupiter notebook will only work when cloning this Github repo to your local machine.
