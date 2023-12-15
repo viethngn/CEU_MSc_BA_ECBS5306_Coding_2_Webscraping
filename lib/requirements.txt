@@ -13,6 +13,10 @@ certifi==2023.11.17
 cffi==1.16.0
 charset-normalizer==3.3.2
 comm==0.2.0
+dash==2.11.0
+dash-core-components==2.0.0
+dash-html-components==2.0.0
+dash-table==5.0.0
 debugpy==1.8.0
 decorator==5.1.1
 defusedxml==0.7.1

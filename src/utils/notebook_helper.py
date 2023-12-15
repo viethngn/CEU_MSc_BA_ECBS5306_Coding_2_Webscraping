@@ -14,6 +14,11 @@ def get_battle_turns_df(df: pd.DataFrame):
     return battle_turns_df
 
 
+def get_pkm_tbs(pkm_code: str, ps_static: PSStaticData):
+    pkm = ps_static.get_pkm_by_code(pkm_code)
+    return sum(pkm['baseStats'].values())
+
+
 def get_pkm_usage(df: pd.DataFrame, ps_static: PSStaticData):
     battle_turns_df = get_battle_turns_df(df)
 
@@ -30,10 +35,11 @@ def get_pkm_usage(df: pd.DataFrame, ps_static: PSStaticData):
         'pokemon'].value_counts().reset_index().rename(columns={'count': 'usage_count'}).sort_values(by=['usage_count'],
                                                                                                      ascending=False)
     total_usage_count = used_pokemon_df['usage_count'].sum()
-    used_pokemon_df['usage_%'] = (used_pokemon_df.usage_count / total_usage_count) * 100
-    used_pokemon_df = used_pokemon_df.round(decimals=2)
+    used_pokemon_df['usage_%'] = (used_pokemon_df.usage_count / total_usage_count)
+    used_pokemon_df = used_pokemon_df.round(decimals=4)
     used_pokemon_df['pkm_name'] = used_pokemon_df.pokemon.apply(lambda x: ps_static.pokedex[x]['name'])
     used_pokemon_df['pkm_types'] = used_pokemon_df.pokemon.apply(lambda x: '-'.join(ps_static.pokedex[x]['types']))
+    used_pokemon_df['pkm_tbs'] = used_pokemon_df.pokemon.apply(lambda x: get_pkm_tbs(x, ps_static))
 
     del battle_turns_df
 
@@ -122,8 +128,8 @@ def get_type_usage_df(df: pd.DataFrame):
 
     result_df = (pd.DataFrame.from_dict({'type': type_usage_dict.keys(),
                                         'usage_count': type_usage_dict.values(),
-                                        'usage_%': [x / total_usage * 100 for x in type_usage_dict.values()]})
-                 .round(decimals=2)
+                                        'usage_%': [x / total_usage for x in type_usage_dict.values()]})
+                 .round(decimals=4)
                  .sort_values(by=['usage_count'],ascending=False ))
 
     del type_turns_df
